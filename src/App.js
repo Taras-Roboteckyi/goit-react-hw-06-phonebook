@@ -1,22 +1,22 @@
-import { useState } from "react";
-import { nanoid } from "nanoid";
+import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
-import ContactForm from "./components/Form/Form";
-import Filter from "./components/Filter/Filter";
-import ContactList from "./components/ContactList/ContactList";
-import useLocalStorage from "./components/Hooks/useLocalStorage";
+import ContactForm from './components/Form/Form';
+import Filter from './components/Filter/Filter';
+import ContactList from './components/ContactList/ContactList';
+import useLocalStorage from './Hooks/useLocalStorage';
 
-import { Container } from "./App.global.styled";
-import { TitlePhoneBook, TitleContacts, Section } from "./App.styled";
+import { Container } from './App.global.styled';
+import { TitlePhoneBook, TitleContacts, Section } from './App.styled';
 
-const LocalStorageKey = "contactsKey";
+const LocalStorageKey = 'contactsKey';
 
 export default function App() {
   const [contacts, setContacts] = useLocalStorage(LocalStorageKey, []);
 
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
 
-  const formSubmitHandler = (data) => {
+  const formSubmitHandler = data => {
     const { name } = data;
     const normalizedNameContact = name.toLowerCase();
 
@@ -24,28 +24,26 @@ export default function App() {
 
     findContactName(normalizedNameContact)
       ? alert(`${name} is already in contacts.`)
-      : setContacts((previousState) => [...previousState, newId]);
+      : setContacts(previousState => [...previousState, newId]);
 
     /* console.log(newId); */
   };
 
-  const findContactName = (nameData) => {
+  const findContactName = nameData => {
     return contacts.find(({ name }) => name.toLowerCase() === nameData);
   };
 
-  const deleteContact = (contactId) => {
-    setContacts((prevState) => prevState.filter(({ id }) => id !== contactId));
+  const deleteContact = contactId => {
+    setContacts(prevState => prevState.filter(({ id }) => id !== contactId));
   };
 
-  const changeFilter = (evt) => {
+  const changeFilter = evt => {
     setFilter(evt.currentTarget.value);
   };
 
   const getFilterContact = () => {
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(({ name }) =>
-      name.toLowerCase().includes(normalizedFilter)
-    );
+    return contacts.filter(({ name }) => name.toLowerCase().includes(normalizedFilter));
   };
 
   return (
