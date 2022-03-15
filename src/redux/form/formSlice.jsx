@@ -13,6 +13,6 @@ export const itemsSlice = createSlice({
   },
 });
 
-console.log(itemsSlice);
+//console.log(itemsSlice);
 
 export const { add, remove } = itemsSlice.actions;

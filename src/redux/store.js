@@ -1,24 +1,53 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { itemsSlice } from './form/formSlice';
-//import { createSlice /* createAction, createReducer  */ } from '@reduxjs/toolkit';
+import { createSlice, createAction, createReducer } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 
-/* const addItems = createAction('items/addItems'); */
+////////Actions///////////////////
+export const addItems = createAction('items/add', (name, number) => ({
+  payload: {
+    id: nanoid(),
+    name,
+    number,
+  },
+}));
+const deleteItems = createAction('items/delete');
 
-/* const counterReducer = createReducer(150, {
-  [addItems]: (state, actions) => state + actions.payload,
+const changeFilter = createAction('items/changeFilter');
+
+const toggleCompleted = createAction('items/toggleCompleted');
+
+////////Reducer///////////////////
+const itemsReducer = createReducer([], {
+  [addItems]: (state, { payload }) =>
+    state.find(({ name }) => name.toLowerCase() === payload.name)
+      ? alert(`${payload.name} is already in contacts.`)
+      : [...state, payload],
+
+  [deleteItems]: (state, { payload }) => state.filter(({ id }) => id !== payload),
+  [toggleCompleted]: (state, { payload }) =>
+    state.map(todo => (todo.id === payload ? { ...todo, completed: !todo.completed } : todo)),
 });
 
-console.log(counterReducer);
+const filterReducer = createReducer('', {
+  [changeFilter]: (_, { payload }) => payload,
+});
 
-export const store = configureStore({
+console.log(addItems);
+
+/* export const store = configureStore({
   reducer: {
     retet: counterReducer,
   },
 }); */
 
+////////Store///////////////////
 export const store = configureStore({
   reducer: {
-    items: itemsSlice.reducer,
+    contacts: combineReducers({
+      items: itemsReducer,
+      filter: filterReducer,
+    }),
   },
 });
 console.log(store.getState());

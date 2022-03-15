@@ -1,30 +1,27 @@
-import { useState } from "react";
-import { nanoid } from "nanoid";
+import { useState } from 'react';
+import { nanoid } from 'nanoid';
+import { useDispatch } from 'react-redux';
 
-import {
-  FormPhoneBook,
-  LabelPhoneBook,
-  InputPhoneBook,
-  ButtonPhoneBook,
-} from "./Form.styled";
-
-export default function ContactForm({ formSubmit }) {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+import { FormPhoneBook, LabelPhoneBook, InputPhoneBook, ButtonPhoneBook } from './Form.styled';
+import { addItems } from '../../redux/store';
+export default function ContactForm(/* { formSubmit } */) {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
 
   const nameInputId = nanoid();
   const numberInputId = nanoid();
 
-  const handleNameChange = (event) => {
+  const handleNameChange = event => {
     event.preventDefault();
 
     const { name, value } = event.currentTarget;
 
     switch (name) {
-      case "name":
+      case 'name':
         setName(value);
         break;
-      case "number":
+      case 'number':
         setNumber(value);
         break;
       default:
@@ -32,17 +29,17 @@ export default function ContactForm({ formSubmit }) {
     }
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = evt => {
     evt.preventDefault();
-
-    formSubmit({ name, number });
-
+    console.log(name, number);
+    //formSubmit({ name, number });
+    dispatch(addItems(name, number));
     reset();
   };
 
   const reset = () => {
-    setName("");
-    setNumber("");
+    setName('');
+    setNumber('');
   };
 
   return (

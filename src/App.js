@@ -16,7 +16,7 @@ export default function App() {
 
   const [filter, setFilter] = useState('');
 
-  const formSubmitHandler = data => {
+  /* const formSubmitHandler = data => {
     const { name } = data;
     const normalizedNameContact = name.toLowerCase();
 
@@ -26,12 +26,12 @@ export default function App() {
       ? alert(`${name} is already in contacts.`)
       : setContacts(previousState => [...previousState, newId]);
 
-    /* console.log(newId); */
-  };
+    console.log(newId);
+  }; */
 
-  const findContactName = nameData => {
+  /* const findContactName = nameData => {
     return contacts.find(({ name }) => name.toLowerCase() === nameData);
-  };
+  }; */
 
   const deleteContact = contactId => {
     setContacts(prevState => prevState.filter(({ id }) => id !== contactId));
@@ -50,7 +50,7 @@ export default function App() {
     <Container>
       <Section>
         <TitlePhoneBook>Phonebook</TitlePhoneBook>
-        <ContactForm formSubmit={formSubmitHandler}></ContactForm>
+        <ContactForm /* formSubmit={formSubmitHandler} */></ContactForm>
       </Section>
 
       <Section>
