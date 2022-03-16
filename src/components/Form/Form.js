@@ -3,8 +3,8 @@ import { nanoid } from 'nanoid';
 import { useDispatch } from 'react-redux';
 
 import { FormPhoneBook, LabelPhoneBook, InputPhoneBook, ButtonPhoneBook } from './Form.styled';
-import { addItems } from '../../redux/store';
-export default function ContactForm(/* { formSubmit } */) {
+import { addItems } from '../../redux/items/items-actions';
+export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
@@ -31,8 +31,8 @@ export default function ContactForm(/* { formSubmit } */) {
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    console.log(name, number);
-    //formSubmit({ name, number });
+    //console.log(name, number);
+
     dispatch(addItems(name, number));
     reset();
   };
